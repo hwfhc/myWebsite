@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>开水专烫鸡</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <script src="javascripts/vue.min.js"></script>
+
+</head>
+
+<body>
+  <div id="article_list">
+   <table>
+      <tr
+        is="article_item"
+        v-for="(item, index) in items"
+        v-bind:article_item="item">
+      </tr>
+    </table>
+  </div>
+
+  <canvas id="demo" width="1400" height="800" onclick="MouseClick(event)">
+  </canvas>
+</body>
+
+<script src="javascripts/graph.js"></script>
+<script src="javascripts/article.js"></script>
+<script src="javascripts/js.js"></script>
+
+</html>
