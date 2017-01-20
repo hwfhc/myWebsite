@@ -13,7 +13,7 @@
 
 ###接口：由后端传递json文件，获取目录栏文章列表，图形框标签分布及大小  
 
-##Layer
+##Layer：
 整个canvas图像  
 
 ####属性: 
@@ -35,7 +35,7 @@
 + DeleteShape():  
 将Shape数组某项设为最后一项，并将最后一项设为undefined，并将Shape.length减一(将最后一项的图形移到要删除的项上)
 
-##Shape
+##Shape：
 每一个标签所对应的圆形  
 
 ####属性:
@@ -67,7 +67,7 @@
 + Transformation(matrix):  
 将矩阵location右乘一个矩阵
 
-##TagPool
+##TagPool：
 所有待处理标签  
 
 ####属性:   
