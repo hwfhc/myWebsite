@@ -77,52 +77,6 @@ function power(number,N){
 
 }
 
-//**************************标签池**********************************************
-class TagPool{
-  constructor(){
-    /*
-     *效果说明:
-     *存储所有选择的标签
-     */
-     this.tags = [];
-  }
-
-  AddTag(tag){
-    this.tags[this.tags.length] = tag;
-  }
-
-  DeleteTag(tag){
-    /*
-     *效果说明:
-     *删除第N个图形，从0开始计数
-     */
-     var length = this.tags.length;
-
-     for(let i=0;i<length;i++)
-     {
-       if(this.tags[i] == tag)
-       {
-         this.tags[i] = this.tags[length-1];
-         this.tags[length-1] = undefined;
-         this.tags.length--;
-       }
-     }
-  }
-
-  isInclude(tag){
-    var length = this.tags.length;
-
-    for(let i=0;i<length;i++)
-    {
-      if(this.tags[i] == tag)
-      {
-        return true;
-      }
-    }
-
-    return false;
-  }
-}
 //**************************矩阵**********************************************
 class Matrix{
   constructor(VALUE){
@@ -295,6 +249,7 @@ class Layer{
     */
     this.canvas = CANVAS;
     this.shapes = [];
+    this.tag_group = new TagGroup();
   }
 
   DeleteShape(N){
@@ -362,5 +317,31 @@ class Layer{
     var ctx = canvas.getContext('2d');
 
     ctx.clearRect(0,0,canvas.width,canvas.height);
+  }
+
+  ClickedAt(x,y){
+    /*
+     *效果说明：
+     *图像某坐标被点击
+     */
+     var distance;
+
+     for(let i=0;i<this.shapes.length;i++){
+         distance = power(x - this.shapes[i].GetX(),2) + power(y - this.shapes[i].GetY(),2);
+
+         if(distance <= power(layer.shapes[i].range,2)){
+           if(this.tag_group.isInclude(this.shapes[i].tag)){
+              this.shapes[i].color = '#0080c0';
+              this.tag_group.DeleteTag(this.shapes[i].tag);
+           }else{
+              this.shapes[i].color = '#f00000';
+              this.tag_group.AddTag(this.shapes[i].tag);
+           }
+
+          this.Clear();
+          this.Draw();
+          break;
+      }
+    }
   }
 }

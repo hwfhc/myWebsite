@@ -1,15 +1,15 @@
-var myJSON =
-'{ "tags":[\
-          {"tag":"html", "number":40, "X":600, "Y":400 ,"color":"#0080c0"},\
-          {"tag":"css", "number":40, "X":800, "Y":600 ,"color":"#00ff00"},\
-          {"tag":"javascript", "number":60, "X":1000, "Y":500 ,"color":"#ff8000"}\
-          ]\
-   }';
-
 var layer;
-var tag_pool = new TagPool();
+var article_list;
 
-function init(){
+function init1(){
+  var myJSON =
+  '{ "tags":[\
+            {"tag":"html", "number":40, "X":600, "Y":400 ,"color":"#0080c0"},\
+            {"tag":"css", "number":40, "X":800, "Y":600 ,"color":"#00ff00"},\
+            {"tag":"javascript", "number":60, "X":1000, "Y":500 ,"color":"#ff8000"}\
+            ]\
+     }';
+
   var obj = JSON.parse(myJSON);
   var center = [];
   var item;
@@ -26,7 +26,25 @@ function init(){
   layer.Draw();
 }
 
-init();
+function init2(){
+  var myJSON =
+  '{ "articles":[\
+              {"title":"二狗", "tags":["css","html"] },\
+              {"title":"关公", "tags":["css","javascript"] },\
+              {"title":"万恶的IE", "tags":["html"] },\
+              {"title":"苟利", "tags":["html"] },\
+              {"title":"生死以", "tags":["javascript"] },\
+              {"title":"西方哪个国家我没去过", "tags":["javascript","css","html"] }\
+              ]\
+    }';
+
+  var obj = JSON.parse(myJSON);
+
+  article_list = new ArticleList(obj.articles);
+}
+
+init1();
+init2();
 
 function MouseClick(e){
    //获取canvas绝对位置
@@ -40,28 +58,6 @@ function MouseClick(e){
    var x = e.clientX + scrollX - X;
    var y = e.clientY + scrollY - Y;
 
-   function isClicked(x,y){
-      var distance;
-
-      for(let i=0;i<layer.shapes.length;i++){
-
-        distance = power(x - layer.shapes[i].GetX(),2) + power(y - layer.shapes[i].GetY(),2);
-
-        if(distance <= power(layer.shapes[i].range,2)){
-          if(tag_pool.isInclude(layer.shapes[i].tag)){
-            layer.shapes[i].color = '#0080c0';
-            tag_pool.DeleteTag(layer.shapes[i].tag);
-          }else{
-            layer.shapes[i].color = '#f00000';
-            tag_pool.AddTag(layer.shapes[i].tag);
-          }
-
-          layer.Clear();
-          layer.Draw();
-          break;
-       }
-     }
-   }
-
-   isClicked(x,y);
+   layer.ClickedAt(x,y);
+   article_list.Filter(layer.tag_group);
 }
