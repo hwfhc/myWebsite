@@ -1,8 +1,30 @@
 #前端部分
-###概述：
 **目录栏（左）**：
 + 排列文章标题与发布日期
 + 鼠标悬于文章上时右侧图形框对应的标签会改变颜色  
+
+##ArticleList：
+文章列表  
+
+####属性: 
++ article[]:  
+存储所有的article  
+
++ visible_article[]:  
+存储会被Refresh()显示的article
+
+####方法:
++ ArticleFiler(tag_group):  
+visible_article中换为拥有tag_group中所有标签的article
+
++ Refresh():  
+重置显示visible_article
+
+##Article：
+####属性: 
++ tag_Group:  
+文章对应的TagGroup   
+
 ---
 
 **图形框（右）**：
@@ -13,12 +35,13 @@
 
 ###接口：由后端传递json文件，获取目录栏文章列表，图形框标签分布及大小  
 
-##Layer：
+##Layer
 整个canvas图像  
 
 ####属性: 
 + canvas:  
-对应本图层的canvas  
+对应本图层的canvas 
+ 
 + Shape[]:  
 指向本图层包含的图形  
 
@@ -35,7 +58,7 @@
 + DeleteShape():  
 将Shape数组某项设为最后一项，并将最后一项设为undefined，并将Shape.length减一(将最后一项的图形移到要删除的项上)
 
-##Shape：
+##Shape
 每一个标签所对应的圆形  
 
 ####属性:
@@ -67,21 +90,24 @@
 + Transformation(matrix):  
 将矩阵location右乘一个矩阵
 
-##TagPool：
+##TagGroup
 所有待处理标签  
 
 ####属性:   
 + tags[]:  
-标签池中所有的标签  
+标签集合中所有的标签  
 
 ####方法:  
 + AddTag(tag):  
 增添一个新的标签  
 
 + DeleteTag(tag):  
-删除标签池中的参数标签  
+删除标签集合中的参数标签  
 
 + isInclude(tag):  
-判断标签是否在标签池中
+判断标签是否被标签集合包含
+
++ isIncludeTagGroup(tag_group):  
+判断标签集合是否完全包含另一个标签集合
 
 ---
