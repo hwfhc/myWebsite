@@ -58,6 +58,20 @@ function MouseClick(e){
    var x = e.clientX + scrollX - X;
    var y = e.clientY + scrollY - Y;
 
-   layer.ClickedAt(x,y);
-   article_list.Filter(layer.tag_group);
+   var shape = layer.ClickedAt(x,y);
+
+   if(shape!=undefined){
+     if(layer.GetTagGroup().isInclude(shape.tag)){
+        shape.color = '#0080c0';
+        layer.GetTagGroup().DeleteTag(shape.tag);
+     }else{
+        shape.color = '#f00000';
+        layer.GetTagGroup().AddTag(shape.tag);
+     }
+
+     layer.Clear();
+     layer.Draw();
+
+     article_list.Filter(layer.GetTagGroup());
+   }
 }

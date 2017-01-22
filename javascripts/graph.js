@@ -321,27 +321,29 @@ class Layer{
 
   ClickedAt(x,y){
     /*
-     *效果说明：
-     *图像某坐标被点击
+     *参数：
+     *x：鼠标点击canvas的x坐标
+     *y：鼠标点击canvas的y坐标
+     *
+     *返回值：
+     *鼠标所点击的shape
      */
      var distance;
 
      for(let i=0;i<this.shapes.length;i++){
-         distance = power(x - this.shapes[i].GetX(),2) + power(y - this.shapes[i].GetY(),2);
+       distance = power(x - this.shapes[i].GetX(),2) + power(y - this.shapes[i].GetY(),2);
 
-         if(distance <= power(layer.shapes[i].range,2)){
-           if(this.tag_group.isInclude(this.shapes[i].tag)){
-              this.shapes[i].color = '#0080c0';
-              this.tag_group.DeleteTag(this.shapes[i].tag);
-           }else{
-              this.shapes[i].color = '#f00000';
-              this.tag_group.AddTag(this.shapes[i].tag);
-           }
-
-          this.Clear();
-          this.Draw();
-          break;
-      }
+       if(distance <= power(layer.shapes[i].range,2)){
+          return this.shapes[i];
+       }
     }
+  }
+
+  GetTagGroup(){
+   /*
+    *效果说明：
+    *获取layer对象的tag_group属性
+    */
+    return this.tag_group;
   }
 }

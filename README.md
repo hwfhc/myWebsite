@@ -17,9 +17,6 @@
 + Filter(tag_group):  
 visible_article中换为拥有tag_group中所有标签的article
 
-+ Refresh():  
-重置显示visible_article
-
 ##Article：
 ####属性: 
 + tag_Group:  
@@ -62,7 +59,10 @@ TagGroup对象，存储被选择的标签
 将Shape数组某项设为最后一项，并将最后一项设为undefined，并将Shape.length减一(将最后一项的图形移到要删除的项上)
 
 + ClickedAt(x,y):  
-图像某坐标被点击时调用，更改tag_group，并传递给
+图像某坐标被点击时调用，更改tag_group，并返回点击的shape
+
++ GetTagGroup():  
+获取layer对象的tag_group属性
 
 ##Shape
 每一个标签所对应的圆形  
