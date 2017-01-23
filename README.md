@@ -117,3 +117,24 @@ TagGroup对象，存储被选择的标签
 判断标签集合是否完全包含另一个标签集合
 
 ---
+
+#后端部分
+####概述：  
+index.json存储文章头，页面初始化时获取（存在脚本判断index.json和正文是否一一对应且正确）  
+1/2/3…….json存储对应编号文章的正文，显示正文时获取  
+graph.json存储canvas布局，页面初始化获取，由脚本解析index.json生成
+####通讯格式：
++ graph.json:   
+tags[]
+ + tag:标签  
+ + number：本标签文章数量
+ + X,Y:标签图形在canvas中的坐标
+ + color：标签颜色
++ index.json：  
+articles[]
+ + ID:文章的编号
+ + title:文章的标题
+ + tags[]:文章的标签集合
++ 1/2/3…….json
+ + title:文章的标题
+ + content:文章的正文  

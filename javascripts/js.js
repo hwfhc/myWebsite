@@ -2,45 +2,45 @@ var layer;
 var article_list;
 
 function init1(){
-  var myJSON =
-  '{ "tags":[\
-            {"tag":"html", "number":40, "X":600, "Y":400 ,"color":"#0080c0"},\
-            {"tag":"css", "number":40, "X":800, "Y":600 ,"color":"#00ff00"},\
-            {"tag":"javascript", "number":60, "X":1000, "Y":500 ,"color":"#ff8000"}\
-            ]\
-     }';
+    var xhttp = new XMLHttpRequest();
+    var myJSON,obj,item,shape;
+    var center = [];
 
-  var obj = JSON.parse(myJSON);
-  var center = [];
-  var item;
-  var shape;
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        myJSON = this.responseText;
+        obj = JSON.parse(myJSON);
 
-  //创建layer
-  layer = new Layer(document.getElementById('demo'));
+        //创建layer
+        layer = new Layer(document.getElementById('demo'));
 
-  //注册图形
-  for(let i=0;i < obj.tags.length;i++){
-    item = obj.tags[i];
-    layer.AddShape(item.X,item.Y,item.number,item.tag,'#0080c0');
-  }
-  layer.Draw();
+        //注册图形
+        for(let i=0;i < obj.tags.length;i++){
+          item = obj.tags[i];
+          layer.AddShape(item.X,item.Y,item.number,item.tag,'#0080c0');
+        }
+        layer.Draw();
+      }
+   };
+   xhttp.open("GET", "/javascripts/graph.json", true);
+   xhttp.send();
 }
 
+
 function init2(){
-  var myJSON =
-  '{ "articles":[\
-              {"title":"二狗", "tags":["css","html"] },\
-              {"title":"关公", "tags":["css","javascript"] },\
-              {"title":"万恶的IE", "tags":["html"] },\
-              {"title":"苟利", "tags":["html"] },\
-              {"title":"生死以", "tags":["javascript"] },\
-              {"title":"西方哪个国家我没去过", "tags":["javascript","css","html"] }\
-              ]\
-    }';
+  var xhttp = new XMLHttpRequest();
+  var myJSON,obj;
 
-  var obj = JSON.parse(myJSON);
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      myJSON = this.responseText;
+      obj = JSON.parse(myJSON);
 
-  article_list = new ArticleList(obj.articles);
+      article_list = new ArticleList(obj.articles);
+    }
+  };
+  xhttp.open("GET", "/articles/index.json", true);
+  xhttp.send();
 }
 
 init1();
