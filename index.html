@@ -21,8 +21,20 @@
     </table>
   </div>
 
-  <canvas id="demo" width="1400" height="800" onclick="MouseClick(event)">
+  <canvas id="graph" width="1400" height="800" onclick="MouseClick(event)">
   </canvas>
+
+  <div id="article_container">
+    <div class="head">
+      <button>开水专烫鸡</button>
+    </div>
+
+    <div class="container">
+      <h1>{{title}}</h1><!--设置标题-->
+      <div v-html="content"></div><!--设置正文-->
+    </div>
+  </div>
+
 </body>
 
 <script src="javascripts/TagGroup.js"></script>

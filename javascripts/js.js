@@ -1,18 +1,18 @@
 var layer;
 var article_list;
 
-function init1(){
+function initGraph(){
     var xhttp = new XMLHttpRequest();
     var myJSON,obj,item,shape;
     var center = [];
-
+ 
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         myJSON = this.responseText;
         obj = JSON.parse(myJSON);
 
         //创建layer
-        layer = new Layer(document.getElementById('demo'));
+        layer = new Layer(document.getElementById('graph'));
 
         //注册图形
         for(let i=0;i < obj.tags.length;i++){
@@ -27,7 +27,7 @@ function init1(){
 }
 
 
-function init2(){
+function initArticle(){
   var xhttp = new XMLHttpRequest();
   var myJSON,obj;
 
@@ -43,13 +43,44 @@ function init2(){
   xhttp.send();
 }
 
-init1();
-init2();
+document.getElementById('article_container').style.display = 'none';
+initGraph();
+initArticle();
+
+var article_container = new Vue({
+  el: '#article_container',
+  data: {
+    title: '',
+    content: ''
+  }
+});
+
+function ArticleChange(ID){
+  var xhttp = new XMLHttpRequest();
+  var myJSON,obj;
+
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      myJSON = this.responseText;
+      obj = JSON.parse(myJSON);
+
+      article_container.title = obj.title;
+      article_container.content = obj.content;
+
+      document.getElementById('article_list').style.display = 'none';
+      document.getElementById('graph').style.display = 'none';
+      document.getElementById('article_container').style.display = '';
+    }
+  };
+  xhttp.open("GET", "/articles/" + ID + ".json", true);
+  xhttp.send();
+
+}
 
 function MouseClick(e){
    //获取canvas绝对位置
-   var X = demo.getBoundingClientRect().left+document.body.scrollLeft;
-   var Y = demo.getBoundingClientRect().top+document.body.scrollTop;
+   var X = graph.getBoundingClientRect().left+document.body.scrollLeft;
+   var Y = graph.getBoundingClientRect().top+document.body.scrollTop;
 
    //获取鼠标在canvas中的坐标
    var e = window.event;

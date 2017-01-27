@@ -1,0 +1,50 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-family: 微软雅黑,楷体,宋体,serif;
+}
+button {
+  cursor: pointer;
+}
+/*去掉谷歌默认的黄色聚焦边框*/
+input,
+button,
+select,
+textarea {
+  outline: none;
+  border: none;
+  background: none;
+}
+/*-------------------------公用的样式设置---------------------*/
+.button_standard {
+  /*形状设置*/
+  border-radius: 10%;
+  padding: 10px 0 10px 0;
+  width: 10%;
+  min-width: 80px;
+  /*颜色设置*/
+  background-color: #0080ff;
+  border: 1px solid #00004c;
+  color: white;
+}
+.button_standard:hover {
+  background-color: #0066e5;
+}
+.button_dark {
+  /*形状设置*/
+  padding: 10px 0 10px 0;
+  width: 100%;
+  /*颜色设置*/
+  background-color: #262626;
+  border: 1px solid #000000;
+  color: white;
+}
+.button_dark:hover {
+  background-color: #0c0c0c;
+}

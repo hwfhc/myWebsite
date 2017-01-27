@@ -1,0 +1,33 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,body {
+  height: 100%;
+  width: 100%;
+  font-family: 微软雅黑,楷体,宋体,serif;
+}
+
+button {
+  cursor: pointer;
+}
+
+/*去掉谷歌默认的黄色聚焦边框*/
+input,button,select,textarea {
+  outline: none;
+  border: none;
+  background: none;
+}
+/*-------------------------公用的样式设置---------------------*/
+.button_standard {
+  padding: 10px 0 10px 0;
+
+  color: white;
+  background-color: black;
+ 
+  &:hover{
+    background-color: #2f2f2f;
+  }
+}

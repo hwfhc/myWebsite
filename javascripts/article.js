@@ -10,8 +10,10 @@ Vue.component('article_item', {
     show: function () {
       var xhttp = new XMLHttpRequest();
       var myJSON,obj;
+     ///////
 
-      xhttp.onreadystatechange = function() {
+     ArticleChange(this.article_item.ID);
+    /*  xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
           myJSON = this.responseText;
           obj = JSON.parse(myJSON);
@@ -20,7 +22,7 @@ Vue.component('article_item', {
         }
       };
       xhttp.open("GET", "/articles/" + this.article_item.ID + ".json", true);
-      xhttp.send();
+      xhttp.send();*/
     }
   }
 })
@@ -98,7 +100,6 @@ class Article{
     this.title = title;
     this.tag_group = new TagGroup();
 
-    console.log(tags);
     for(let i=0;i<tags.length;i++){
       this.tag_group.AddTag(tags[i]);
     }
