@@ -76,7 +76,7 @@ class ArticleList{
 
     //将article值赋给visible_article
     for(let i=0;i<this.article.length;i++){
-      item = new Article(this.article[i].ID,this.article[i].title,this.article[i].tag_group.GetTags());
+      item = new Article(this.article[i].ID,this.article[i].title,this.article[i].tag_group.tags)
       this.visible_article.push(item);
     }
 
@@ -94,11 +94,14 @@ class Article{
   constructor(id,title,tags){
    /*
     *属性说明：
-    *文章对应的标题
-		*需求：TagGroup
+    *文章对应的标题,TagGroup
     */
     this.ID = id;
     this.title = title;
-    this.tag_group = TagGroup(tags); 
+    this.tag_group = new TagGroup();
+
+    for(let i=0;i<tags.length;i++){
+      this.tag_group.AddTag(tags[i]);
+    }
   }
 }

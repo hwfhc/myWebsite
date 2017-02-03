@@ -249,7 +249,7 @@ class Layer{
     */
     this.canvas = CANVAS;
     this.shapes = [];
-    this.tag_group = TagGroup([]);
+    this.tag_group = new TagGroup();
   }
 
   DeleteShape(N){
