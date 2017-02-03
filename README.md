@@ -104,26 +104,24 @@ TagGroup对象，存储被选择的标签
 标签集合中所有的标签  
 
 ####方法:  
++ init(tags[]):  
+传入数组，初始化标签集合
+
++ GetTags():  
+将所有标签以一个数组形式输出  
+
 + AddTag(tag):  
 增添一个新的标签  
 
 + DeleteTag(tag):  
 删除标签集合中的参数标签  
 
-+ GetTagAtN(N):  
-获取第N位的标签
-
-+ isInclude(tag):  
-判断标签是否被标签集合包含
-
 + isIncludeTagGroup(tag_group):  
-判断标签集合是否完全包含另一个标签集合
-
-+ GetTags():  
-将所有标签以一个数组形式输出
-
-+ GetNumber():  
-获取标签数目
+判断标签集合是否完全包含另一个标签集合  
+  + 参数：另一个TagGroup
+  + 返回值：  
+    + true：完全包含另一集合   
+    + false：~~~
 
 ---
 
