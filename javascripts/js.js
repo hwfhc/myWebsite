@@ -92,7 +92,7 @@ function MouseClick(e){
    var shape = layer.ClickedAt(x,y);
 
    if(shape!=undefined){
-     if(layer.GetTagGroup().isIncludeTagGroup(TagGroup([shape.tag]))){
+     if(layer.GetTagGroup().isIncludeTagGroup(new TagGroup([shape.tag]))){
         shape.color = '#0080c0';
         layer.GetTagGroup().DeleteTag(shape.tag);
      }else{

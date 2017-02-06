@@ -15,7 +15,14 @@
 
 ####方法:
 + Filter(tag_group):  
-visible_article中换为拥有tag_group中所有标签的article
+visible_article中换为拥有tag_group中所有标签的article  
+
++ AddArticle(id,title,tags):  
+添加一个article
+
+ + id：文章编号  
+ + title：文章标题  
+ + tags[]：文章标签的数组  
 
 ##Article：
 ####属性: 

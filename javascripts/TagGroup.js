@@ -5,7 +5,12 @@ function TagGroup(TAGS){
 	 *
 	 *参数说明：
 	 *初始化的标签数组
-	 */
+	 */	
+	this.GetTags = GetTags;
+	this.AddTag = AddTag;
+	this.DeleteTag = DeleteTag;
+	this.isIncludeTagGroup = isIncludeTagGroup;
+
 	var tags = [];
 
 	for(let i=0;i<TAGS.length;i++){
@@ -92,12 +97,5 @@ function TagGroup(TAGS){
 
 			return false;
 		}
-	}
-
-	return {
-       	GetTags : GetTags,
-				AddTag : AddTag,
-				DeleteTag : DeleteTag,
-				isIncludeTagGroup : isIncludeTagGroup
 	}
 }
