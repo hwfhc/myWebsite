@@ -8,7 +8,7 @@ http.createServer( function (request, response) {
    var pathname = url.parse(request.url).pathname;
 
    // Print the name of the file for which request is made.
-   console.log("Request for " + pathname + " received.");
+//   console.log("Request for " + pathname + " received.");
 
    // Read the requested file content from file system
    fs.readFile(pathname.substr(1), function (err, data) {
