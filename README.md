@@ -75,22 +75,22 @@ TagGroup对象，存储被选择的标签
 
 + AddShape(X,Y,range,tag,color):为图层添加一个shape，其后是shape初始化参数 
   + 参数：
-   + X，Y：shape中心location坐标
-   + range：shape半径
-   + tag：
-   + color：shape的颜色  
+    + X，Y：shape中心location坐标
+    + range：shape半径
+    + tag：
+    + color：shape的颜色  
   + 返回值：null  
 
 
 + DeleteShape(N):删除第N个shape  
   + 参数：
-   + N：删除shape序号
+    + N：删除shape序号
   + 返回值：null  
 
 
 + ClickedAt(x,y):获取被点击的shape
   + 参数：
-   + x,y：鼠标点击点的坐标
+    + x,y：鼠标点击点的坐标
   + 返回值：被点击shape的指针  
 
 
@@ -122,13 +122,13 @@ TagGroup对象，存储被选择的标签
 
 ####方法:
 + GetX():获取中心X坐标 
- + 参数：null
- + 返回值：中心X坐标
+  + 参数：null
+  + 返回值：中心X坐标
 
 
 + GetY():获取中心Y坐标 
- + 参数：null
- + 返回值：中心Y坐标
+  + 参数：null
+  + 返回值：中心Y坐标
 
 
 + Transformation(matrix):将矩阵location右乘一个矩阵
