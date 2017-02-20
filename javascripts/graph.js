@@ -74,7 +74,6 @@ function power(number,N){
   else{
     return number * power(number,N-1);
   }
-
 }
 
 //**************************矩阵**********************************************

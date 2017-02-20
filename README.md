@@ -1,4 +1,15 @@
 #前端部分
+###Layer
++ TagGroup
++ Shape  
+  + TagGroup
+  + Matrix
+
+###ArticleList
++ TagGroup
++ Article  
+  + TagGroup
+
 **目录栏（左）**：
 + 排列文章标题与发布日期
 + 鼠标悬于文章上时右侧图形框对应的标签会改变颜色  
@@ -53,23 +64,39 @@ visible_article中换为拥有tag_group中所有标签的article
 TagGroup对象，存储被选择的标签
 
 ####方法:
-+ draw():  
-读取所有shape并绘制
++ draw():  读取所有shape并绘制
+  + 参数：null
+  + 返回值：null
 
-+ clea():   
-清空本图层  
++ clear():清空本图层
+  + 参数：null
+  + 返回值：null 
 
-+ AddShape(X,Y,range,tag,color):  
-为图层添加一个shape，其后是shape初始化参数  
 
-+ DeleteShape():  
-将Shape数组某项设为最后一项，并将最后一项设为undefined，并将Shape.length减一(将最后一项的图形移到要删除的项上)
++ AddShape(X,Y,range,tag,color):为图层添加一个shape，其后是shape初始化参数 
+  + 参数：
+   + X，Y：shape中心location坐标
+   + range：shape半径
+   + tag：
+   + color：shape的颜色  
+  + 返回值：null  
 
-+ ClickedAt(x,y):  
-图像某坐标被点击时调用，更改tag_group，并返回点击的shape
 
-+ GetTagGroup():  
-获取layer对象的tag_group属性
++ DeleteShape(N):删除第N个shape  
+  + 参数：
+   + N：删除shape序号
+  + 返回值：null  
+
+
++ ClickedAt(x,y):获取被点击的shape
+  + 参数：
+   + x,y：鼠标点击点的坐标
+  + 返回值：被点击shape的指针  
+
+
++ GetTagGroup():获取layer对象的tag_group属性
+  + 参数：null
+  + 返回值：指向tag_group的指针
 
 ##Shape
 每一个标签所对应的圆形  
@@ -94,14 +121,20 @@ TagGroup对象，存储被选择的标签
 说明shape线条样式  
 
 ####方法:
-+ GetX():  
-获取中心X坐标 
++ GetX():获取中心X坐标 
+ + 参数：null
+ + 返回值：中心X坐标
 
-+ GetY():  
-获取中心Y坐标
 
-+ Transformation(matrix):  
-将矩阵location右乘一个矩阵
++ GetY():获取中心Y坐标 
+ + 参数：null
+ + 返回值：中心Y坐标
+
+
++ Transformation(matrix):将矩阵location右乘一个矩阵
+ + 参数：
+   + matrix：3X3矩阵
+ + 返回值：无
 
 ##TagGroup
 所有待处理标签  
@@ -111,24 +144,32 @@ TagGroup对象，存储被选择的标签
 标签集合中所有的标签  
 
 ####方法:  
-+ init(tags[]):  
-传入数组，初始化标签集合
++ constructor(tags[]):传入数组，初始化标签集合
+  + 参数：
+    + tags[]：包含所有初始拥有标签的数组
+  + 返回值：新的TagGroup
 
-+ GetTags():  
-将所有标签以一个数组形式输出  
 
-+ AddTag(tag):  
-增添一个新的标签  
++ GetTags():将所有标签以一个数组形式输出  
+  + 参数：null
+  + 返回值：包含所有标签的数组
 
-+ DeleteTag(tag):  
-删除标签集合中的参数标签  
 
-+ isIncludeTagGroup(tag_group):  
-判断标签集合是否完全包含另一个标签集合  
++ AddTag(tag):增添一个新的标签  
+  + 参数：
+    + tag：要添加的标签
+  + 返回值：null
+
+
++ DeleteTag(tag):删除标签集合中的参数标签
+  + 参数：
+    + tag：要删除的标签
+  + 返回值：null  
+
+
++ isIncludeTagGroup(tag_group):判断标签集合是否完全包含另一个标签集合
   + 参数：另一个TagGroup
-  + 返回值：  
-    + true：完全包含另一集合   
-    + false：~~~
+  + 返回值：是否包含完全包含另一标签集合的布尔值
 
 ---
 
