@@ -1,0 +1,6 @@
+{ "tags":[
+          {"tag":"html", "number":40, "X":300, "Y":200 ,"color":"#0080c0"},
+          {"tag":"css", "number":40, "X":500, "Y":100 ,"color":"#00ff00"},
+          {"tag":"javascript", "number":60, "X":400, "Y":200 ,"color":"#ff8000"}
+          ]
+}

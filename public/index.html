@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>开水专烫鸡</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
+<script src="vue.min.js"></script>
+
+</head>
+
+<body>
+<div id="article_list">
+    <table>
+        <tr
+            is="article_item"
+            v-for="(item, index) in items"
+            v-bind:article_item="item">
+        </tr>
+    </table>
+</div>
+
+<canvas id="graph" width="800" height="400">
+</canvas>
+
+<div id="article_container">
+    <div class="head">
+        <button>开水专烫鸡</button>
+    </div>
+
+    <div class="container">
+        <h1>{{title}}</h1><!--设置标题-->
+        <div v-html="content"></div><!--设置正文-->
+    </div>
+</div>
+
+</body>
+<script src="bundle.js"></script>
+
+</html>
