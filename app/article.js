@@ -1,4 +1,4 @@
-var TagGroup = require('./TagGroup.js');
+var tagSet = require('tag_set');
 
 Vue.component('article_item', {
     template: '\
@@ -116,13 +116,13 @@ function ArticleList(ARTICLE){
         //将article值赋给visible_article
         for(let i=0;i<article.length;i++){
             let item;
-            item = new Article(article[i].ID,article[i].title,article[i].tag_group.GetTags());
+            item = new Article(article[i].ID,article[i].title,article[i].tag_group.OutPut());
             visible_article.push(item);
         }
 
         //筛选
         for(let i=0;i<visible_article.length;i++){
-            if(visible_article[i].tag_group.isIncludeTagGroup(tag_group) == false){
+            if(visible_article[i].tag_group.isContain(tag_group) == false){
                 visible_article.splice(i,1);
                 i--;
             }
@@ -140,7 +140,7 @@ function ArticleList(ARTICLE){
          */
         this.ID = id;
         this.title = title;
-        this.tag_group = TagGroup.Create(tags);
+        this.tag_group = new tagSet(tags);
     }
 
 }

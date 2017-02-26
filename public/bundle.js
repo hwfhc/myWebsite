@@ -63,119 +63,14 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-exports.Create = function(TAGS){
-    var item = new TagGroup(TAGS);
-    return item;
-};
-
-function TagGroup(TAGS){
-	/*
-	 *效果说明:
-	 *存储所有选择的标签
-	 *
-	 *参数说明：
-	 *初始化的标签数组
-	 */
-	this.GetTags = GetTags;
-	this.AddTag = AddTag;
-	this.DeleteTag = DeleteTag;
-	this.isIncludeTagGroup = isIncludeTagGroup;
-
-	var tags = [];
-
-	for(let i=0;i<TAGS.length;i++){
-		tags[i] = TAGS[i];
-	}
-
-	function GetTags(){
-		/*
-		 *效果说明：
-		 *将所有标签以数组形式输出
-		 */
-		var TAGS = [];
-
-		for(let i=0;i<tags.length;i++)
-		{
-			TAGS[i] = tags[i];
-		}
-
-		return TAGS;
-	}
-
-	function AddTag(tag){
-		/*
-		 *效果说明：
-		 *添加参数标签
-		 */
-		tags[tags.length] = tag;
-	}
-
-	function DeleteTag(tag){
-		/*
-		 *效果说明:
-		 *删除参数标签
-		 */
-		var length = tags.length;
-
-		for(let i=0;i<length;i++)
-		{
-			if(tags[i] == tag)
-			{
-				tags[i] = tags[length-1];
-				tags[length-1] = undefined;
-				tags.length--;
-			}
-		}
-	}
-
-	function isIncludeTagGroup(tag_group){
-		/*
-		 *效果说明:
-		 *判断标签集合是否完全包含另一个标签集合
-		 *参数：
-		 *另一个TagGroup
-		 *返回值：
-		 *true:本集合完全包含另一集合
-		 *false:~~~
-		 */
-
-		var Another_tags = tag_group.GetTags();
-		var length = Another_tags.length;
-
-		for(let i=0;i<length;i++){
-			if(isInclude(Another_tags[i]) == false){
-				return false;
-			}
-		}
-
-		return true;
-
-		function isInclude(tag){
-			/*
-			 *效果说明:
-			 *判断标签是否被标签集合包含
-			 */
-			var length = tags.length;
-
-			for(let i=0;i<length;i++)
-			{
-				if(tags[i] == tag)
-				{
-					return true;
-				}
-			}
-
-			return false;
-		}
-	}
-}
+module.exports = __webpack_require__(4);
 
 
 /***/ }),
@@ -305,7 +200,7 @@ function Matrix(VALUE){
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var TagGroup = __webpack_require__(0);
+var tagSet = __webpack_require__(0);
 
 Vue.component('article_item', {
     template: '\
@@ -423,13 +318,13 @@ function ArticleList(ARTICLE){
         //将article值赋给visible_article
         for(let i=0;i<article.length;i++){
             let item;
-            item = new Article(article[i].ID,article[i].title,article[i].tag_group.GetTags());
+            item = new Article(article[i].ID,article[i].title,article[i].tag_group.OutPut());
             visible_article.push(item);
         }
 
         //筛选
         for(let i=0;i<visible_article.length;i++){
-            if(visible_article[i].tag_group.isIncludeTagGroup(tag_group) == false){
+            if(visible_article[i].tag_group.isContain(tag_group) == false){
                 visible_article.splice(i,1);
                 i--;
             }
@@ -447,7 +342,7 @@ function ArticleList(ARTICLE){
          */
         this.ID = id;
         this.title = title;
-        this.tag_group = TagGroup.Create(tags);
+        this.tag_group = new tagSet(tags);
     }
 
 }
@@ -458,7 +353,7 @@ function ArticleList(ARTICLE){
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var TagGroup = __webpack_require__(0);
+var tagSet = __webpack_require__(0);
 var Matrix = __webpack_require__(1);
 
 //**************************数学常量**********************************************
@@ -590,7 +485,7 @@ function Layer(CANVAS){
      */
     this.canvas = CANVAS;
     this.shapes = [];
-    this.tag_group = TagGroup.Create([]);
+    this.tag_group = new tagSet([]);
 }
 
 Layer.prototype.DeleteShape = function(N){
@@ -691,12 +586,78 @@ Layer.prototype.GetTagGroup = function(){
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports) {
+
+module.exports = tagSet;
+
+
+function tagSet(ELEMENTS){
+    /*
+     *效果说明:
+     *初始化集合
+     */
+    this.value = ELEMENTS.concat();
+}
+
+tagSet.prototype.OutPut = function(){
+    /*
+     *效果说明：
+     *将所有标签以数组形式输出
+     */
+    return this.value.concat();
+}
+
+tagSet.prototype.Add = function(element){
+    /*
+     *效果说明：
+     *添加新的元素
+     */
+    this.value.push(element);
+}
+
+tagSet.prototype.Delete = function(element){
+    /*
+     *效果说明:
+     *删除元素
+     */
+    this.value = this.value.filter(function(item){
+        return !(item === element);
+    });
+}
+
+tagSet.prototype.isContain = function(SET){
+    /*
+     *效果说明:
+     *判断集合是否包含另一个集合
+     */
+
+    var set = this.value;
+
+    return SET.value.every(function(SET_item){
+        return set.some(function(item){
+            return item === SET_item;
+        });
+    });
+}
+tagSet.prototype.isOwn = function(element){
+    /*
+     *效果说明:
+     *判断元素是否属于集合
+     */
+    return this.value.some(function(item){
+        return item === element;
+    });
+}
+
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Article = __webpack_require__(2);
 var Layer = __webpack_require__(3);
 var matrix = __webpack_require__(1);
-var TagGroup = __webpack_require__(0);
+var tagSet = __webpack_require__(0);
 
 
 var layer = Layer.Create(document.getElementById('graph'));
@@ -762,12 +723,12 @@ function MouseClick(e){
    var shape = layer.ClickedAt(x,y);
 
    if(shape!=undefined){
-       if(layer.GetTagGroup().isIncludeTagGroup(TagGroup.Create([shape.tag]))){
+       if(layer.GetTagGroup().isOwn(shape.tag)){
         shape.color = '#0080c0';
-        layer.GetTagGroup().DeleteTag(shape.tag);
+        layer.GetTagGroup().Delete(shape.tag);
      }else{
         shape.color = '#f00000';
-        layer.GetTagGroup().AddTag(shape.tag);
+        layer.GetTagGroup().Add(shape.tag);
      }
 
      layer.Clear();

@@ -1,4 +1,4 @@
-var TagGroup = require('./TagGroup');
+var tagSet = require('tag_set');
 var Matrix = require('./matrix.js');
 
 //**************************数学常量**********************************************
@@ -130,7 +130,7 @@ function Layer(CANVAS){
      */
     this.canvas = CANVAS;
     this.shapes = [];
-    this.tag_group = TagGroup.Create([]);
+    this.tag_group = new tagSet([]);
 }
 
 Layer.prototype.DeleteShape = function(N){

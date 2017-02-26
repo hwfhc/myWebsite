@@ -1,7 +1,7 @@
 var Article = require('./article.js');
 var Layer = require('./graph.js');
 var matrix = require('./matrix.js');
-var TagGroup = require('./TagGroup.js');
+var tagSet = require('tag_set');
 
 
 var layer = Layer.Create(document.getElementById('graph'));
@@ -67,12 +67,12 @@ function MouseClick(e){
    var shape = layer.ClickedAt(x,y);
 
    if(shape!=undefined){
-       if(layer.GetTagGroup().isIncludeTagGroup(TagGroup.Create([shape.tag]))){
+       if(layer.GetTagGroup().isOwn(shape.tag)){
         shape.color = '#0080c0';
-        layer.GetTagGroup().DeleteTag(shape.tag);
+        layer.GetTagGroup().Delete(shape.tag);
      }else{
         shape.color = '#f00000';
-        layer.GetTagGroup().AddTag(shape.tag);
+        layer.GetTagGroup().Add(shape.tag);
      }
 
      layer.Clear();
