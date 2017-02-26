@@ -1,5 +1,5 @@
 var tagSet = require('tag_set');
-var Matrix = require('./matrix.js');
+var Matrix = require('matrix_tool');
 
 //**************************数学常量**********************************************
 function cos(angle){
@@ -82,7 +82,7 @@ class Shape{
          *range：图形半径
          *
          */
-        this.location = Matrix.Create([
+        this.location = new Matrix([
             [center[0],center[1],1]
         ]);
         this.range = range;
