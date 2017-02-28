@@ -1,3 +1,5 @@
+module.exports = ArticleList;
+
 var tagSet = require('tag_set');
 
 Vue.component('article_item', {
@@ -57,10 +59,6 @@ Vue.component('article_item', {
     }
 })
 
-exports.Create = function(ARTICLE){
-    var item = new ArticleList(ARTICLE);
-    return item;
-};
 
 function ArticleList(ARTICLE){
     /*

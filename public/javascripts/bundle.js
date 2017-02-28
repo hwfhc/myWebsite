@@ -84,6 +84,8 @@ module.exports = __webpack_require__(4);
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = ArticleList;
+
 var tagSet = __webpack_require__(0);
 
 Vue.component('article_item', {
@@ -143,10 +145,6 @@ Vue.component('article_item', {
     }
 })
 
-exports.Create = function(ARTICLE){
-    var item = new ArticleList(ARTICLE);
-    return item;
-};
 
 function ArticleList(ARTICLE){
     /*
@@ -672,80 +670,75 @@ var tagSet = __webpack_require__(0);
 var layer = Layer.Create(document.getElementById('graph'));
 var article_list;
 
-function initGraph(){
+(function initGraph(){
     var xhttp = new XMLHttpRequest();
     var myJSON,obj,item,shape;
     var center = [];
 
     xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        myJSON = this.responseText;
-        obj = JSON.parse(myJSON);
+        if (this.readyState == 4 && this.status == 200) {
+            myJSON = this.responseText;
+            obj = JSON.parse(myJSON);
 
-        //注册图形
-        for(let i=0;i < obj.tags.length;i++){
-          item = obj.tags[i];
-          layer.AddShape(item.X,item.Y,item.number,item.tag,'#0080c0');
+            //注册图形
+            for(let i=0;i < obj.tags.length;i++){
+                item = obj.tags[i];
+                layer.AddShape(item.X,item.Y,item.number,item.tag,'#0080c0');
+            }
+            layer.Draw();
         }
-        layer.Draw();
-      }
-   };
-   xhttp.open("GET", "/javascripts/graph.json", true);
-   xhttp.send();
-}
+    };
+    xhttp.open("GET", "/javascripts/graph.json", true);
+    xhttp.send();
+})();
 
+//article init
+(function(){
+    var xhttp = new XMLHttpRequest();
+    var myJSON,obj;
 
-function initArticle(){
-  var xhttp = new XMLHttpRequest();
-  var myJSON,obj;
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            myJSON = this.responseText;
+            obj = JSON.parse(myJSON);
 
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      myJSON = this.responseText;
-      obj = JSON.parse(myJSON);
-
-      article_list = Article.Create(obj.articles);
-    }
-  };
-  xhttp.open("GET", "/articles/index.json", true);
-  xhttp.send();
-}
+            article_list = new Article(obj.articles);
+        }
+    };
+    xhttp.open("GET", "/articles/index.json", true);
+    xhttp.send();
+})();
 
 document.getElementById('article_container').style.display = 'none';
-initGraph();
-initArticle();
+document.getElementById('graph').onclick = (function(e){
+    //获取canvas绝对位置
+    var X = graph.getBoundingClientRect().left+document.body.scrollLeft;
+    var Y = graph.getBoundingClientRect().top+document.body.scrollTop;
 
-document.getElementById('graph').onclick = MouseClick;
+    //获取鼠标在canvas中的坐标
+    var e = window.event;
+    var scrollX = document.body.scrollLeft;
+    var scrollY = document.body.scrollTop;
+    var x = e.clientX + scrollX - X;
+    var y = e.clientY + scrollY - Y;
 
-function MouseClick(e){
-   //获取canvas绝对位置
-   var X = graph.getBoundingClientRect().left+document.body.scrollLeft;
-   var Y = graph.getBoundingClientRect().top+document.body.scrollTop;
+    var shape = layer.ClickedAt(x,y);
 
-   //获取鼠标在canvas中的坐标
-   var e = window.event;
-   var scrollX = document.body.scrollLeft;
-   var scrollY = document.body.scrollTop;
-   var x = e.clientX + scrollX - X;
-   var y = e.clientY + scrollY - Y;
+    if(shape!=undefined){
+        if(layer.GetTagGroup().isOwn(shape.tag)){
+            shape.color = '#0080c0';
+            layer.GetTagGroup().Delete(shape.tag);
+        }else{
+            shape.color = '#f00000';
+            layer.GetTagGroup().Add(shape.tag);
+        }
 
-   var shape = layer.ClickedAt(x,y);
+        layer.Clear();
+        layer.Draw();
 
-   if(shape!=undefined){
-       if(layer.GetTagGroup().isOwn(shape.tag)){
-        shape.color = '#0080c0';
-        layer.GetTagGroup().Delete(shape.tag);
-     }else{
-        shape.color = '#f00000';
-        layer.GetTagGroup().Add(shape.tag);
-     }
-
-     layer.Clear();
-     layer.Draw();
-
-     article_list.Filter(layer.GetTagGroup());
-   }
-}
+        article_list.Filter(layer.GetTagGroup());
+    }
+});
 
 
 /***/ })
