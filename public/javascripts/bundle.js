@@ -603,7 +603,32 @@ function tagSet(ELEMENTS){
      *效果说明:
      *初始化集合
      */
-    this.value = ELEMENTS.concat();
+    var isRepeat = (function(){
+        var judge = {};
+
+        return function(value){
+            if(judge[value] === undefined){
+                judge[value] = true;
+                return false;
+            }else{
+                return true;
+            }
+        }
+    })();
+
+    if(ELEMENTS.every(function(item,index,array){
+        if(typeof item === 'string' && isRepeat(item) === false){
+            return true;
+        }
+        else{
+            return false;
+        }
+    })){
+        this.value = ELEMENTS.concat();
+    }
+    else{
+        console.log('element must be string or can not repeat');
+    }
 }
 
 tagSet.prototype.OutPut = function(){
@@ -619,7 +644,13 @@ tagSet.prototype.Add = function(element){
      *效果说明：
      *添加新的元素
      */
-    this.value.push(element);
+    if(!this.value.some(function(item){
+        return item === element;
+    }) && typeof element === 'string'){
+        this.value.push(element);
+    }else{
+        console.log('element must be string or can not repeat');
+    }
 }
 
 tagSet.prototype.Delete = function(element){

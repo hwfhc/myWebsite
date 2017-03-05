@@ -47,7 +47,13 @@ tagSet.prototype.Add = function(element){
      *效果说明：
      *添加新的元素
      */
-    this.value.push(element);
+    if(!this.value.some(function(item){
+        return item === element;
+    }) && typeof element === 'string'){
+        this.value.push(element);
+    }else{
+        console.log('element must be string or can not repeat');
+    }
 }
 
 tagSet.prototype.Delete = function(element){
