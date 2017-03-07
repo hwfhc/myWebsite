@@ -30,7 +30,7 @@ function tagSet(ELEMENTS){
         this.value = ELEMENTS.concat();
     }
     else{
-        console.log('element must be string or can not repeat');
+        console.error('[tag_set] element must be string or can not repeat');
     }
 }
 
@@ -52,7 +52,7 @@ tagSet.prototype.Add = function(element){
     }) && typeof element === 'string'){
         this.value.push(element);
     }else{
-        console.log('element must be string or can not repeat');
+        console.error('[tag_set] element must be string or can not repeat');
     }
 }
 
