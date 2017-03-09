@@ -63,172 +63,28 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(5);
+module.exports = __webpack_require__(6);
 
 
 /***/ }),
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(4);
+module.exports = __webpack_require__(5);
 
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = ArticleList;
-
-var tagSet = __webpack_require__(0);
-
-Vue.component('article_item', {
-    template: '\
-  <tr>\
-    <button v-on:click="this.show" v-html="article_item.title">\
-    </button>\
-  <tr>\
-  ',
-    props: ['article_item'],
-    methods: {
-        show: function () {
-            var article_container = new Vue({
-                el: '#article_container',
-                data: {
-                    title: '',
-                    content: ''
-                }
-            });
-
-            var xhttp = new XMLHttpRequest();
-            var myJSON,obj;
-            ///////
-            function ArticleChange(ID){
-                var xhttp = new XMLHttpRequest();
-                var myJSON,obj;
-
-                xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        myJSON = this.responseText;
-                        obj = JSON.parse(myJSON);
-
-                        article_container.title = obj.title;
-                        article_container.content = obj.content;
-
-                        document.getElementById('article_list').style.display = 'none';
-                        document.getElementById('graph').style.display = 'none';
-                        document.getElementById('article_container').style.display = '';
-                    }
-                };
-                xhttp.open("GET", "/articles/" + ID + ".json", true);
-                xhttp.send();
-
-            }
-            ArticleChange(this.article_item.ID);
-            /*  xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          myJSON = this.responseText;
-          obj = JSON.parse(myJSON);
-
-          document.getElementById('article_list').innerHTML = obj.content;
-        }
-      };
-      xhttp.open("GET", "/articles/" + this.article_item.ID + ".json", true);
-      xhttp.send();*/
-        }
-    }
-})
-
-
-function ArticleList(ARTICLE){
-    /*
-     *参数说明:
-     *存储所有article的对象数组
-     *参数格式：
-     *article[i].title:文章标题
-     *article[i].tags:标签数组（非标签集合对象）
-     */
-
-    //将ARTICLE值赋给article
-    var article = [];
-
-    for(let i=0;i<ARTICLE.length;i++){
-        let item;
-        item = new Article(ARTICLE[i].ID,ARTICLE[i].title,ARTICLE[i].tags)
-        article.push(item);
-    }
-
-    //将article值赋给visible_article
-    var visible_article = [];
-
-    for(let i=0;i<ARTICLE.length;i++){
-        let item;
-        item = new Article(ARTICLE[i].ID,ARTICLE[i].title,ARTICLE[i].tags)
-        visible_article.push(item);
-    }
-
-    new Vue({
-        el: '#article_list',
-        data: {
-            items: visible_article
-        }
-    })
-
-    //对外接口
-    this.Filter = Filter;
-
-
-    function Filter(tag_group){
-        /*
-         *效果说明：
-         *visible_article中换为拥有tag_group中所有标签的article
-         */
-
-        //清空visible_article
-        for(let i=0;i<visible_article.length;i++){
-            let item;
-            visible_article.pop();
-            i--;
-        }
-
-        //将article值赋给visible_article
-        for(let i=0;i<article.length;i++){
-            let item;
-            item = new Article(article[i].ID,article[i].title,article[i].tag_group.OutPut());
-            visible_article.push(item);
-        }
-
-        //筛选
-        for(let i=0;i<visible_article.length;i++){
-            if(visible_article[i].tag_group.isContain(tag_group) == false){
-                visible_article.splice(i,1);
-                i--;
-            }
-        }
-    }
-
-
-    function Article(id,title,tags){
-        /*
-         *属性说明：
-         *id:文章的编号
-         *title:文章对应的标题
-         *tags:文章所有标签的数组
-         *需求：TagGroup
-         */
-        this.ID = id;
-        this.title = title;
-        this.tag_group = new tagSet(tags);
-    }
-
-}
-
+module.exports = __webpack_require__(4);
 
 
 /***/ }),
@@ -468,6 +324,157 @@ Layer.prototype.GetTagGroup = function(){
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = ArticleList;
+
+var tagSet = __webpack_require__(0);
+
+Vue.component('article_item', {
+    template: '\
+  <tr>\
+    <button v-on:click="this.show" v-html="article_item.title">\
+    </button>\
+  <tr>\
+  ',
+    props: ['article_item'],
+    methods: {
+        show: function () {
+            var article_container = new Vue({
+                el: '#article_container',
+                data: {
+                    title: '',
+                    content: ''
+                }
+            });
+
+            var xhttp = new XMLHttpRequest();
+            var myJSON,obj;
+            ///////
+            function ArticleChange(ID){
+                var xhttp = new XMLHttpRequest();
+                var myJSON,obj;
+
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        myJSON = this.responseText;
+                        obj = JSON.parse(myJSON);
+
+                        article_container.title = obj.title;
+                        article_container.content = obj.content;
+
+                        document.getElementById('article_list').style.display = 'none';
+                        document.getElementById('graph').style.display = 'none';
+                        document.getElementById('article_container').style.display = '';
+                    }
+                };
+                xhttp.open("GET", "/articles/" + ID + ".json", true);
+                xhttp.send();
+
+            }
+            ArticleChange(this.article_item.ID);
+            /*  xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          myJSON = this.responseText;
+          obj = JSON.parse(myJSON);
+
+          document.getElementById('article_list').innerHTML = obj.content;
+        }
+      };
+      xhttp.open("GET", "/articles/" + this.article_item.ID + ".json", true);
+      xhttp.send();*/
+        }
+    }
+})
+
+
+function ArticleList(ARTICLE){
+    /*
+     *参数说明:
+     *存储所有article的对象数组
+     *参数格式：
+     *article[i].title:文章标题
+     *article[i].tags:标签数组（非标签集合对象）
+     */
+
+    //将ARTICLE值赋给article
+    var article = [];
+
+    for(let i=0;i<ARTICLE.length;i++){
+        let item;
+        item = new Article(ARTICLE[i].ID,ARTICLE[i].title,ARTICLE[i].tags)
+        article.push(item);
+    }
+
+    //将article值赋给visible_article
+    var visible_article = [];
+
+    for(let i=0;i<ARTICLE.length;i++){
+        let item;
+        item = new Article(ARTICLE[i].ID,ARTICLE[i].title,ARTICLE[i].tags)
+        visible_article.push(item);
+    }
+
+    new Vue({
+        el: '#article_list',
+        data: {
+            items: visible_article
+        }
+    })
+
+    //对外接口
+    this.Filter = Filter;
+
+
+    function Filter(tag_group){
+        /*
+         *效果说明：
+         *visible_article中换为拥有tag_group中所有标签的article
+         */
+
+        //清空visible_article
+        for(let i=0;i<visible_article.length;i++){
+            let item;
+            visible_article.pop();
+            i--;
+        }
+
+        //将article值赋给visible_article
+        for(let i=0;i<article.length;i++){
+            let item;
+            item = new Article(article[i].ID,article[i].title,article[i].tag_group.OutPut());
+            visible_article.push(item);
+        }
+
+        //筛选
+        for(let i=0;i<visible_article.length;i++){
+            if(visible_article[i].tag_group.isContain(tag_group) == false){
+                visible_article.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+
+    function Article(id,title,tags){
+        /*
+         *属性说明：
+         *id:文章的编号
+         *title:文章对应的标题
+         *tags:文章所有标签的数组
+         *需求：TagGroup
+         */
+        this.ID = id;
+        this.title = title;
+        this.tag_group = new tagSet(tags);
+    }
+
+}
+
+
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports) {
 
 module.exports = Matrix;
@@ -477,17 +484,17 @@ function Matrix(VALUE){
      *效果说明:
      *创建一个矩阵
      */
-     if(VALUE.length != 0){
-       this.value = VALUE;
-       this.row = VALUE.length;
-       this.column = VALUE[0].length;
-     }
-     else{
-       console.log("矩阵不能无元素");
-     }
-  }
+    if(VALUE.length != 0){
+        this.value = VALUE;
+        this.row = VALUE.length;
+        this.column = VALUE[0].length;
+    }
+    else{
+        console.error("[matrix_tool] there is no element in matrix");
+    }
+}
 
-  Matrix.prototype.Add = function(M){
+Matrix.prototype.Add = function(M){
     /*
      *效果说明:
      *矩阵相加，在本矩阵基础上加上M矩阵,获得一个新的矩阵
@@ -502,26 +509,26 @@ function Matrix(VALUE){
 
     if(this.row == M.row && this.column == M.column)//同型矩阵判断
     {
-      for(row = 0;row < this.row; row++)
-      {
-        //初始化每一行的数组，否则无法使用数组脚标(js没有二维数组)
-        OutPut.value[row] = [];
-
-        for(column = 0;column < this.column; column++)
+        for(row = 0;row < this.row; row++)
         {
-          OutPut.value[row][column] = this.value[row][column] + M.value[row][column];
+            //初始化每一行的数组，否则无法使用数组脚标(js没有二维数组)
+            OutPut.value[row] = [];
+
+            for(column = 0;column < this.column; column++)
+            {
+                OutPut.value[row][column] = this.value[row][column] + M.value[row][column];
+            }
         }
-      }
     }
     else
     {
-      console.log('矩阵相加异常');
+        console.error('[matrix_tool] columns and row of two matrix must be same');
     }
 
     return OutPut;
-  }
+}
 
-  Matrix.prototype.Multiple = function(M){
+Matrix.prototype.Multiple = function(M){
     /*
      *效果说明:
      *矩阵相乘，在本矩阵基础上右乘M矩阵，获得新的矩阵
@@ -541,58 +548,55 @@ function Matrix(VALUE){
 
     if(this.column == M.row)//列数等于行数
     {
-      for(row = 0;row < this.row;row++)
-      {
-        //初始化每一行的数组，否则无法使用数组脚标(js没有二维数组)
-        OutPut.value[row] = [];
-
-        for(column = 0;column < this.column; column++)
+        for(row = 0;row < this.row;row++)
         {
-          sum = 0;
+            //初始化每一行的数组，否则无法使用数组脚标(js没有二维数组)
+            OutPut.value[row] = [];
 
-          for(i = 0;i < this.column;i++)
-          {
-            sum += this.value[row][i] * M.value[i][column];
-          }
+            for(column = 0;column < this.column; column++)
+            {
+                sum = 0;
 
-          OutPut.value[row][column] = sum;
+                for(i = 0;i < this.column;i++)
+                {
+                    sum += this.value[row][i] * M.value[i][column];
+                }
+
+                OutPut.value[row][column] = sum;
+            }
         }
-      }
     }
     else
     {
-      console.log('矩阵相乘异常');
+        console.error('[matrix_tool] columns and rows must be same');
     }
     //设置矩阵行，列
     OutPut.ReFreshRC();
     return OutPut;
-  }
+}
 
-  Matrix.prototype.GetNumber = function(row,column){
+Matrix.prototype.GetNumber = function(row,column){
     if(row <= this.row && column <= this.column && row > 0 && column >0){
-      return this.value[row-1][column-1];
+        return this.value[row-1][column-1];
     }
     else{
-      console.log("获取矩阵数值失败");
+        console.error("[matrix_tool] can not get the number");
     }
-  }
+}
 
-  Matrix.prototype.ReFreshRC = function(){
-   /*
-    *效果说明：
-    *重新计算矩阵的宽和列
-    */
+Matrix.prototype.ReFreshRC = function(){
+    /*
+     *效果说明：
+     *重新计算矩阵的宽和列
+     */
     this.row = this.value.length;
     this.column = this.value[0].length;
-  }
-
-function Location(x,y){
-
 }
 
 
+
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports) {
 
 module.exports = tagSet;
@@ -627,7 +631,7 @@ function tagSet(ELEMENTS){
         this.value = ELEMENTS.concat();
     }
     else{
-        console.log('element must be string or can not repeat');
+        console.error('[tag_set] element must be string or can not repeat');
     }
 }
 
@@ -649,7 +653,7 @@ tagSet.prototype.Add = function(element){
     }) && typeof element === 'string'){
         this.value.push(element);
     }else{
-        console.log('element must be string or can not repeat');
+        console.error('[tag_set] element must be string or can not repeat');
     }
 }
 
@@ -689,7 +693,7 @@ tagSet.prototype.isOwn = function(element){
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Article = __webpack_require__(2);

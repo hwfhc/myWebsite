@@ -1,4 +1,4 @@
-var Article = require('./article.js');
+var Article = require('./article');
 var Layer = require('./graph.js');
 var Matrix = require('matrix_tool');
 var tagSet = require('tag_set');
