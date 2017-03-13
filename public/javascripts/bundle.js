@@ -393,6 +393,7 @@ function ArticleList(ARTICLE){
      *参数说明:
      *存储所有article的对象数组
      *参数格式：
+     *article[i].ID:文章ID
      *article[i].title:文章标题
      *article[i].tags:标签数组（非标签集合对象）
      */
@@ -400,22 +401,14 @@ function ArticleList(ARTICLE){
     //将ARTICLE值赋给article
     var article = [];
 
-    for(let i=0;i<ARTICLE.length;i++){
-        let item;
-        item = new Article(ARTICLE[i].ID,ARTICLE[i].title,ARTICLE[i].tags)
-        article.push(item);
-    }
+    ARTICLE.forEach(function(item,index){
+      article.push(new Article(ARTICLE[index].ID,ARTICLE[index].title,ARTICLE[index].tags));
+    });
 
     //将article值赋给visible_article
-    var visible_article = [];
+    var visible_article = article.concat();
 
-    for(let i=0;i<ARTICLE.length;i++){
-        let item;
-        item = new Article(ARTICLE[i].ID,ARTICLE[i].title,ARTICLE[i].tags)
-        visible_article.push(item);
-    }
-
-    new Vue({
+    var VueReact = new Vue({
         el: '#article_list',
         data: {
             items: visible_article
@@ -432,19 +425,9 @@ function ArticleList(ARTICLE){
          *visible_article中换为拥有tag_group中所有标签的article
          */
 
-        //清空visible_article
-        for(let i=0;i<visible_article.length;i++){
-            let item;
-            visible_article.pop();
-            i--;
-        }
-
         //将article值赋给visible_article
-        for(let i=0;i<article.length;i++){
-            let item;
-            item = new Article(article[i].ID,article[i].title,article[i].tag_group.OutPut());
-            visible_article.push(item);
-        }
+        visible_article = article.concat();
+        VueReact.items = visible_article;
 
         //筛选
         for(let i=0;i<visible_article.length;i++){
@@ -485,9 +468,25 @@ function Matrix(VALUE){
      *创建一个矩阵
      */
     if(VALUE.length != 0){
-        this.value = VALUE;
-        this.row = VALUE.length;
-        this.column = VALUE[0].length;
+        if(VALUE.every(function(item){
+            if( item.every(function(item2){
+                if(typeof item2 === 'number'){
+                    return true;
+                }else{
+                    return false;
+                }
+            })){
+                return true;
+            }else{
+                return false;
+            }
+        })){
+            this.value = VALUE;
+            this.row = VALUE.length;
+            this.column = VALUE[0].length;
+        }else{
+            console.error("[matrix_tool] the element of matrix must be a number");
+        }
     }
     else{
         console.error("[matrix_tool] there is no element in matrix");
@@ -592,7 +591,6 @@ Matrix.prototype.ReFreshRC = function(){
     this.row = this.value.length;
     this.column = this.value[0].length;
 }
-
 
 
 /***/ }),
