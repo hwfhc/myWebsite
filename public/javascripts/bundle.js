@@ -447,7 +447,13 @@ function ArticleList(ARTICLE){
          *tags:文章所有标签的数组
          *需求：TagGroup
          */
-        this.ID = id;
+        Object.defineProperty(this,'ID',{
+            configurable: false,
+            writable: false,
+            value: id
+        })
+
+        this.ID = 'asdfsadf';
         this.title = title;
         this.tag_group = new tagSet(tags);
     }
