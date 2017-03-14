@@ -1,58 +1,9 @@
+module.exports = Layer;
+
 var tagSet = require('tag_set');
 var Matrix = require('matrix_tool');
 
-//**************************数学常量**********************************************
-function cos(angle){
-    /*
-     *效果说明：
-     *计算角度的余弦值，角度越大精度越差
-     *
-     *计算方法:
-     *cos函数的麦克劳林展开
-     */
-    var value;
-    value = 1-power(angle,2)/2+power(angle,4)/24;
-    return value;
-}
 
-function sin(angle){
-    /*
-     *效果说明：
-     *计算角度的余弦值，角度越大精度越差
-     *
-     *计算方法:
-     *cos函数的麦克劳林展开
-     */
-    var value;
-    value = angle-power(angle,3)/6+power(angle,5)/120;
-    return value;
-}
-
-function max(N1,N2){
-    /*
-     *效果说明：
-     *求N1，N2最小值
-     */
-    if(N1 >= N2){
-        return N1;
-    }
-    else{
-        return N2;
-    }
-}
-
-function min(N1,N2){
-    /*
-     *效果说明：
-     *求N1，N2最小值
-     */
-    if(N1 <= N2){
-        return N1;
-    }
-    else{
-        return N2;
-    }
-}
 
 function power(number,N){
     /*
@@ -72,7 +23,7 @@ function power(number,N){
         return number * power(number,N-1);
     }
 }
-//**************************图形**********************************************
+/**************************图形**********************************************/
 class Shape{
     constructor(center,range,tag,color){
         /*
@@ -116,11 +67,6 @@ class Shape{
     }
 }
 //**************************图层**********************************************
-exports.Create = function(CANVAS){
-    var item = new Layer(CANVAS);
-    return item;
-};
-
 function Layer(CANVAS){
     /*
      *效果说明:

@@ -1,16 +1,16 @@
-var Article = require('./article');
-var Layer = require('./graph.js');
+var Article = require('article');
+var Layer = require('./graph/graph.js');
 var Matrix = require('matrix_tool');
 var tagSet = require('tag_set');
 
 
-var layer = Layer.Create(document.getElementById('graph'));
+var layer = new Layer(document.getElementById('graph'));
 var article_list;
 
-(function initGraph(){
-    var xhttp = new XMLHttpRequest();
-    var myJSON,obj,item,shape;
-    var center = [];
+{//graph init
+    let xhttp = new XMLHttpRequest();
+    let myJSON,obj,item,shape;
+    let center = [];
 
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -27,12 +27,11 @@ var article_list;
     };
     xhttp.open("GET", "/javascripts/graph.json", true);
     xhttp.send();
-})();
+}
 
-//article init
-(function(){
-    var xhttp = new XMLHttpRequest();
-    var myJSON,obj;
+{//article init
+    let xhttp = new XMLHttpRequest();
+    let myJSON,obj;
 
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -44,11 +43,13 @@ var article_list;
     };
     xhttp.open("GET", "/articles/index.json", true);
     xhttp.send();
-})();
+}
 
 document.getElementById('article_container').style.display = 'none';
-document.getElementById('graph').onclick = (function(e){
-    //获取canvas绝对位置
+
+
+document.getElementById('graph').addEventListener('click',function(e){
+  //获取canvas绝对位置
     var X = graph.getBoundingClientRect().left+document.body.scrollLeft;
     var Y = graph.getBoundingClientRect().top+document.body.scrollTop;
 

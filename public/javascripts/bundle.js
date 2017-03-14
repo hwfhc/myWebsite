@@ -84,68 +84,12 @@ module.exports = __webpack_require__(5);
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(4);
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
+module.exports = Layer;
 
 var tagSet = __webpack_require__(0);
 var Matrix = __webpack_require__(1);
 
-//**************************数学常量**********************************************
-function cos(angle){
-    /*
-     *效果说明：
-     *计算角度的余弦值，角度越大精度越差
-     *
-     *计算方法:
-     *cos函数的麦克劳林展开
-     */
-    var value;
-    value = 1-power(angle,2)/2+power(angle,4)/24;
-    return value;
-}
 
-function sin(angle){
-    /*
-     *效果说明：
-     *计算角度的余弦值，角度越大精度越差
-     *
-     *计算方法:
-     *cos函数的麦克劳林展开
-     */
-    var value;
-    value = angle-power(angle,3)/6+power(angle,5)/120;
-    return value;
-}
-
-function max(N1,N2){
-    /*
-     *效果说明：
-     *求N1，N2最小值
-     */
-    if(N1 >= N2){
-        return N1;
-    }
-    else{
-        return N2;
-    }
-}
-
-function min(N1,N2){
-    /*
-     *效果说明：
-     *求N1，N2最小值
-     */
-    if(N1 <= N2){
-        return N1;
-    }
-    else{
-        return N2;
-    }
-}
 
 function power(number,N){
     /*
@@ -165,7 +109,7 @@ function power(number,N){
         return number * power(number,N-1);
     }
 }
-//**************************图形**********************************************
+/**************************图形**********************************************/
 class Shape{
     constructor(center,range,tag,color){
         /*
@@ -209,11 +153,6 @@ class Shape{
     }
 }
 //**************************图层**********************************************
-exports.Create = function(CANVAS){
-    var item = new Layer(CANVAS);
-    return item;
-};
-
 function Layer(CANVAS){
     /*
      *效果说明:
@@ -320,6 +259,13 @@ Layer.prototype.GetTagGroup = function(){
      */
     return this.tag_group;
 }
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(4);
 
 
 /***/ }),
@@ -451,10 +397,14 @@ function ArticleList(ARTICLE){
             configurable: false,
             writable: false,
             value: id
-        })
+        });
 
-        this.ID = 'asdfsadf';
-        this.title = title;
+        Object.defineProperty(this,'title',{
+            configurable: false,
+            writable: false,
+            value: title
+        });
+
         this.tag_group = new tagSet(tags);
     }
 
@@ -700,19 +650,19 @@ tagSet.prototype.isOwn = function(element){
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Article = __webpack_require__(2);
-var Layer = __webpack_require__(3);
+var Article = __webpack_require__(3);
+var Layer = __webpack_require__(2);
 var Matrix = __webpack_require__(1);
 var tagSet = __webpack_require__(0);
 
 
-var layer = Layer.Create(document.getElementById('graph'));
+var layer = new Layer(document.getElementById('graph'));
 var article_list;
 
-(function initGraph(){
-    var xhttp = new XMLHttpRequest();
-    var myJSON,obj,item,shape;
-    var center = [];
+{//graph init
+    let xhttp = new XMLHttpRequest();
+    let myJSON,obj,item,shape;
+    let center = [];
 
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -729,12 +679,11 @@ var article_list;
     };
     xhttp.open("GET", "/javascripts/graph.json", true);
     xhttp.send();
-})();
+}
 
-//article init
-(function(){
-    var xhttp = new XMLHttpRequest();
-    var myJSON,obj;
+{//article init
+    let xhttp = new XMLHttpRequest();
+    let myJSON,obj;
 
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -746,11 +695,13 @@ var article_list;
     };
     xhttp.open("GET", "/articles/index.json", true);
     xhttp.send();
-})();
+}
 
 document.getElementById('article_container').style.display = 'none';
-document.getElementById('graph').onclick = (function(e){
-    //获取canvas绝对位置
+
+
+document.getElementById('graph').addEventListener('click',function(e){
+  //获取canvas绝对位置
     var X = graph.getBoundingClientRect().left+document.body.scrollLeft;
     var Y = graph.getBoundingClientRect().top+document.body.scrollTop;
 
