@@ -3,8 +3,6 @@ module.exports = Layer;
 var tagSet = require('tag_set');
 var Matrix = require('matrix_tool');
 
-
-
 function power(number,N){
     /*
      *效果说明:
@@ -84,10 +82,7 @@ Layer.prototype.DeleteShape = function(N){
      *效果说明:
      *删除第N个图形，从0开始计数
      */
-    var length = this.shapes.length;
-    this.shapes[N] = this.shapes[length-1];
-    this.shapes[length-1] = undefined;
-    this.shapes.length--;
+    this.shapes.slice(N,1);
 }
 
 Layer.prototype.AddShape = function(X,Y,range,tag,color){
@@ -95,10 +90,7 @@ Layer.prototype.AddShape = function(X,Y,range,tag,color){
      *效果说明:
      *将事先创建的shape添加到本图层
      */
-    var length = this.shapes.length;
-    var shape = new Shape([X,Y],range,tag,color);
-
-    this.shapes[length] = shape;
+    this.shapes.push(new Shape([X,Y],range,tag,color));
 }
 
 Layer.prototype.Draw = function(){
