@@ -277,10 +277,15 @@ class Shape{
          *range：图形半径
          *
          */
+        Object.defineProperty(this,'range',{
+            configurable: false,
+            writable: false,
+            value: range
+        });
+
         this.location = new Matrix([
             [center[0],center[1],1]
         ]);
-        this.range = range;
         this.tag = tag;
         this.color = color;
     }
@@ -318,7 +323,13 @@ function Layer(CANVAS){
      *canvas是对应的canvas元素
      *包含一些图形
      */
-    this.canvas = CANVAS;
+
+    Object.defineProperty(this,'canvas',{
+        configurable: false,
+        writable: false,
+        value: CANVAS
+    });
+
     this.shapes = [];
     this.tag_group = new tagSet([]);
 }
