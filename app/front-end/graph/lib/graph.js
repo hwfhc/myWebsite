@@ -160,7 +160,7 @@ Layer.prototype.ClickedAt = function(x,y){
      */
     var distance;
 
-    for(let i=0;i<this.shapes.length;i++){
+    for(var i=0;i<this.shapes.length;i++){
         distance = power(x - this.shapes[i].GetX(),2) + power(y - this.shapes[i].GetY(),2);
 
         if(distance <= power(this.shapes[i].range,2)){

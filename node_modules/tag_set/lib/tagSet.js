@@ -1,11 +1,12 @@
 module.exports = tagSet;
 
-
 function tagSet(ELEMENTS){
     /*
      *效果说明:
      *初始化集合
      */
+
+    //判断元素是否重复
     var isRepeat = (function(){
         var judge = {};
 
@@ -19,6 +20,8 @@ function tagSet(ELEMENTS){
         }
     })();
 
+    //判断元素是否重复并且必须为字符串
+    var isRepeat = (function(){
     if(ELEMENTS.every(function(item,index,array){
         if(typeof item === 'string' && isRepeat(item) === false){
             return true;
@@ -47,6 +50,8 @@ tagSet.prototype.Add = function(element){
      *效果说明：
      *添加新的元素
      */
+
+    //元素不能重复并且必须为字符串
     if(!this.value.some(function(item){
         return item === element;
     }) && typeof element === 'string'){
