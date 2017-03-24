@@ -1,8 +1,6 @@
 exports.start = start;
 
-var express = require('express');
-
-var app = express();
+var app = (require('express')());
 
 function start(root){
     app.get('/',function(req,res){
