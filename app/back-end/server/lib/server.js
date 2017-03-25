@@ -1,26 +1,10 @@
 exports.start = start;
 
-var app = (require('express')());
+var root = '/usr/local/Repositories/myWebsite/public';
 
-function start(root){
-    app.get('/',function(req,res){
-        res.sendFile(root + '/index.html');
-    });
+function start(){
+    var app = (require('express')());
+    var server = require('add');
 
-    app.get('/css/:file',function(req,res){
-        res.sendFile(root + '/css/' + req.params['file']);
-    });
-
-    app.get('/javascripts/:file',function(req,res){
-        res.sendFile(root + '/javascripts/' + req.params['file']);
-    });
-
-    app.get('/articles/:file',function(req,res){
-        res.sendFile(root + '/articles/' + req.params['file']);
-    });
-
-
-    var server = app.listen(80,function(){
-        console.log('server start...');
-    })
+    server.start(app,root);
 };
